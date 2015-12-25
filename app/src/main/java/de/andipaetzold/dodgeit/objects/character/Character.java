@@ -21,11 +21,11 @@ public class Character extends GameObject {
     }
 
     public void calcNewPosition(long delta, float[] orientation) {
-        position.x += orientation[2] * 10;
+        position.x += orientation[2] * delta;
         position.x = Math.max(position.x, 0);
         position.x = Math.min(position.x, Display.getWidth() - getWidth());
 
-        position.y -= orientation[1] * 10;
+        position.y -= orientation[1] * delta;
         position.y = Math.max(position.y, 0);
         position.y = Math.min(position.y, Display.getHeight() - getHeight());
     }
