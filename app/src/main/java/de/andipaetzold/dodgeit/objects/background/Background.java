@@ -8,6 +8,9 @@ public class Background extends GameObject {
     public Background() {
         position.y = -getHeight();
     }
+    public Background(int y) {
+        position.y = y;
+    }
 
     @Override
     public int getWidth() {
@@ -24,7 +27,7 @@ public class Background extends GameObject {
     protected int getImg() {
         return R.drawable.background;
     }
-    
+
     public void calcNewPosition(long delta, float scrollSpeed) {
         position.y += scrollSpeed * delta;
     }

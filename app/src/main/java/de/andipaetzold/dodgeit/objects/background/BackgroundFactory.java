@@ -5,11 +5,22 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import de.andipaetzold.dodgeit.game.Display;
+
 public class BackgroundFactory {
     private List<Background> backgrounds = new ArrayList<Background>();
 
     public List<Background> getBackgrounds() {
         return Collections.unmodifiableList(backgrounds);
+    }
+
+    public BackgroundFactory() {
+        int y = 0;
+        while (y < Display.getHeight()) {
+            Background background = new Background(y);
+            backgrounds.add(background);
+            y += background.getHeight();
+        }
     }
 
     public void calcBackgrounds(long delta, float scrollSpeed) {
