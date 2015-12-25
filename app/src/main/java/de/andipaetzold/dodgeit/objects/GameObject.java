@@ -30,4 +30,8 @@ public abstract class GameObject {
 
         return scaledImg;
     }
+
+    public boolean isDisposable() {
+        return Display.getHeight() <= position.y;
+    }
 }

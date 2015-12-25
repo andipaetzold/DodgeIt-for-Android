@@ -2,13 +2,15 @@ package de.andipaetzold.dodgeit.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import de.andipaetzold.dodgeit.objects.GameObject;
+import de.andipaetzold.dodgeit.objects.background.Background;
+import de.andipaetzold.dodgeit.objects.background.BackgroundFactory;
 import de.andipaetzold.dodgeit.objects.character.Character;
 import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
@@ -20,6 +22,8 @@ public class GameEngine {
     Character character;
     private GameLoopThread gameLoopThread;
     private SurfaceView view;
+
+    private BackgroundFactory backgroundFactory = new BackgroundFactory();
 
     private float scrollSpeed = 0.3f;
 
@@ -84,7 +88,7 @@ public class GameEngine {
     }
 
     private void calcBackground(long delta) {
-
+        backgroundFactory.calcBackgrounds(delta, scrollSpeed);
     }
 
     private void calcObstacles(long delta) {
@@ -98,7 +102,10 @@ public class GameEngine {
     }
 
     private void drawBackground(Canvas c) {
-        c.drawColor(Color.BLACK);
+        List<Background> backgrounds = backgroundFactory.getBackgrounds();
+        for (Background background : backgrounds) {
+            drawGameObject(c, background);
+        }
     }
 
     private void drawCharacter(Canvas c) {

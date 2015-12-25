@@ -34,4 +34,9 @@ public class Character extends GameObject {
         position.y = Math.max(position.y, 0);
         position.y = Math.min(position.y, Display.getHeight() - getHeight());
     }
+
+    @Override
+    public boolean isDisposable() {
+        return false;
+    }
 }
