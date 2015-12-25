@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DodgeIt</string>
+    <string name="menu_button_play">Play</string>
+    <string name="menu_button_leaderboard">Leaderboard</string>
+    <string name="menu_button_settings">Settings</string>
+    <string name="menu_button_about">About</string>
+</resources>
