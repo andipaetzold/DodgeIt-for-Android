@@ -21,7 +21,7 @@ public class Character extends GameObject {
     }
 
     @Override
-    public int getImg() {
+    protected int getImg() {
         return R.drawable.character;
     }
 

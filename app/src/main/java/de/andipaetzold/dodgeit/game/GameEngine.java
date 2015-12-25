@@ -11,13 +11,16 @@ import de.andipaetzold.dodgeit.objects.GameObject;
 import de.andipaetzold.dodgeit.objects.character.Character;
 import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
+import de.andipaetzold.dodgeit.objects.obstacles.ObstacleFactory;
 import de.andipaetzold.dodgeit.util.Point;
 
 public class GameEngine {
-    ArrayList<Obstacle> obstacles = new ArrayList<>();
+    ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
     Character character;
     private GameLoopThread gameLoopThread;
     private SurfaceView view;
+
+    private float scrollSpeed = 0.3f;
 
     public GameEngine(SurfaceView surfaceView) {
         gameLoopThread = new GameLoopThread(this);
@@ -59,7 +62,7 @@ public class GameEngine {
 
     private void calcObstacles(long delta) {
         for (Obstacle obstacle : obstacles) {
-            obstacle.calcNewPosition(delta);
+            obstacle.calcNewPosition(delta, scrollSpeed);
         }
     }
 

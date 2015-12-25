@@ -2,24 +2,19 @@ package de.andipaetzold.dodgeit.objects.obstacles;
 
 import de.andipaetzold.dodgeit.R;
 
-public class Obstacle2x1 extends Obstacle {
-    @Override
-    public void calcNewPosition(long delta) {
-
-    }
-
+public class Obstacle2x1 extends StaticObstacle {
     @Override
     public int getWidth() {
-        return 100;
+        return 256;
     }
 
     @Override
     public int getHeight() {
-        return 50;
+        return 128;
     }
 
     @Override
-    public int getImg() {
+    protected int getImg() {
         return R.drawable.obstacle_2x1;
     }
 }
