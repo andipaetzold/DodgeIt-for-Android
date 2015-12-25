@@ -86,21 +86,11 @@ public class GameEngine {
 
     public void resume() {
         InputEngine.getInstance().resume();
-        gameLoopThread.setRunning(true);
-        gameLoopThread.start();
+        gameLoopThread.restart();
     }
 
     public void pause() {
         InputEngine.getInstance().pause();
-
-        boolean retry = true;
-        gameLoopThread.setRunning(false);
-        while (retry) {
-            try {
-                gameLoopThread.join();
-                retry = false;
-            } catch (InterruptedException ignored) {
-            }
-        }
+        gameLoopThread.pause();
     }
 }

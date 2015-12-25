@@ -9,10 +9,6 @@ public class GameLoopThread extends Thread {
         this.gameEngine = gameEngine;
     }
 
-    public void setRunning(boolean run) {
-        running = run;
-    }
-
     @Override
     public void run() {
         long ticksPS = 1000 / FPS;
@@ -27,6 +23,23 @@ public class GameLoopThread extends Thread {
                 sleepTime = Math.max(sleepTime, 10);
                 sleep(sleepTime);
             } catch (Exception e) {
+            }
+        }
+    }
+
+    public void restart() {
+        running = true;
+        start();
+    }
+
+    public void pause() {
+        boolean retry = true;
+        running = false;
+        while (retry) {
+            try {
+                join();
+                retry = false;
+            } catch (InterruptedException ignored) {
             }
         }
     }
