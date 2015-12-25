@@ -1,11 +1,17 @@
 package de.andipaetzold.dodgeit.game;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
 
+import de.andipaetzold.dodgeit.objects.character.Character;
+
+import de.andipaetzold.dodgeit.App;
+import de.andipaetzold.dodgeit.objects.GameObject;
+import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
 
 public class GameEngine {
@@ -16,32 +22,9 @@ public class GameEngine {
 
     public GameEngine(SurfaceView surfaceView) {
         gameLoopThread = new GameLoopThread(this);
-
         view = surfaceView;
-        view.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                gameLoopThread.setRunning(true);
-                gameLoopThread.start();
-            }
 
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                boolean retry = true;
-                gameLoopThread.setRunning(false);
-                while (retry) {
-                    try {
-                        gameLoopThread.join();
-                        retry = false;
-                    } catch (InterruptedException e) {
-                    }
-                }
-            }
-        });
+        character = new CharacterFactory().getCharacter();
     }
 
     public void draw(long delta) {
@@ -54,6 +37,11 @@ public class GameEngine {
         Canvas c = null;
         try {
             c = view.getHolder().lockCanvas();
+
+            if (c == null) {
+                return;
+            }
+
             synchronized (view.getHolder()) {
                 drawBackground(c);
                 drawObstacles(c);
@@ -84,18 +72,34 @@ public class GameEngine {
     }
 
     private void drawCharacter(Canvas c) {
-
+        drawGameObject(c, character);
     }
 
     private void drawObstacles(Canvas c) {
+        for (Obstacle obstacle : obstacles) {
+            drawGameObject(c, obstacle);
+        }
+    }
 
+    private void drawGameObject(Canvas c, GameObject gameObject) {
+        Bitmap bmp = BitmapFactory.decodeResource(App.getContext().getResources(), gameObject.getImg());
+        c.drawBitmap(bmp, gameObject.getX(), gameObject.getY(), null);
     }
 
     public void resume() {
-
+        gameLoopThread.setRunning(true);
+        gameLoopThread.start();
     }
 
     public void pause() {
-
+        boolean retry = true;
+        gameLoopThread.setRunning(false);
+        while (retry) {
+            try {
+                gameLoopThread.join();
+                retry = false;
+            } catch (InterruptedException e) {
+            }
+        }
     }
 }
