@@ -3,7 +3,7 @@ package de.andipaetzold.dodgeit.game;
 import android.graphics.Canvas;
 
 public class GameLoopThread extends Thread {
-    static final long FPS = 10;
+    static final long FPS = 60;
     private GameEngine gameEngine;
     private boolean running = false;
 
