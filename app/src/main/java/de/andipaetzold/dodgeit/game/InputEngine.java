@@ -39,6 +39,7 @@ public class InputEngine implements SensorEventListener {
     float[] gravity;
     float[] geomagnetic;
     float[] orientation = new float[3];
+
     public void onSensorChanged(SensorEvent event) {
         switch (event.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
@@ -51,9 +52,8 @@ public class InputEngine implements SensorEventListener {
 
         if (gravity != null && geomagnetic != null) {
             float R[] = new float[9];
-            float I[] = new float[9];
 
-            if (SensorManager.getRotationMatrix(R, I, gravity, geomagnetic)) {
+            if (SensorManager.getRotationMatrix(R, null, gravity, geomagnetic)) {
                 SensorManager.getOrientation(R, orientation);
             }
         }
