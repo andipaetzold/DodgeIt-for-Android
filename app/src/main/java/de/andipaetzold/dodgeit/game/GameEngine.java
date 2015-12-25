@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import de.andipaetzold.dodgeit.objects.GameObject;
 import de.andipaetzold.dodgeit.objects.character.Character;
@@ -37,6 +38,7 @@ public class GameEngine {
 
         // game action
         spawnObstacles(delta);
+        disposeObstacles();
 
         // draw
         Canvas c = null;
@@ -59,7 +61,18 @@ public class GameEngine {
         }
     }
 
+    private void disposeObstacles() {
+        Iterator<Obstacle> iterator = obstacles.iterator();
+        while (iterator.hasNext()) {
+            Obstacle obstacle = iterator.next();
+            if (obstacle.isDisposable()) {
+                iterator.remove();
+            }
+        }
+    }
+
     private long nextSpawn = 0;
+
     private void spawnObstacles(long delta) {
         nextSpawn -= delta;
 

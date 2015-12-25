@@ -13,4 +13,9 @@ public abstract class StaticObstacle extends Obstacle {
     public void calcNewPosition(long delta, float scrollSpeed) {
         position.y += scrollSpeed * delta;
     }
+
+    @Override
+    public boolean isDisposable() {
+        return Display.getHeight() <= position.y;
+    }
 }
