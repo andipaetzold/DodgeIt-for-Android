@@ -29,11 +29,14 @@ public class GameEngine {
         character = new CharacterFactory().getCharacter();
     }
 
-    public void draw(long delta) {
+    public void update(long delta) {
         // calc
         calcBackground(delta);
         calcObstacles(delta);
         calcCharacter(delta);
+
+        // game action
+        spawnObstacles(delta);
 
         // draw
         Canvas c = null;
@@ -53,6 +56,17 @@ public class GameEngine {
             if (c != null) {
                 view.getHolder().unlockCanvasAndPost(c);
             }
+        }
+    }
+
+    private long nextSpawn = 0;
+    private void spawnObstacles(long delta) {
+        nextSpawn -= delta;
+
+        if (nextSpawn <= 0) {
+            obstacles.add(new ObstacleFactory().getObstacle());
+
+            nextSpawn = 2000;
         }
     }
 

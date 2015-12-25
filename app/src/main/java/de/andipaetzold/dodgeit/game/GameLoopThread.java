@@ -23,7 +23,7 @@ public class GameLoopThread extends Thread {
             Canvas c = null;
             long startTime = System.currentTimeMillis();
 
-            gameEngine.draw(ticksPS);
+            gameEngine.update(ticksPS);
 
             long sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
             try {
