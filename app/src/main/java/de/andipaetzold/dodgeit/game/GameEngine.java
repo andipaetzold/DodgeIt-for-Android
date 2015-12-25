@@ -3,6 +3,7 @@ package de.andipaetzold.dodgeit.game;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class GameEngine {
     }
 
     private void drawBackground(Canvas c) {
-
+        c.drawColor(Color.BLACK);
     }
 
     private void drawCharacter(Canvas c) {
