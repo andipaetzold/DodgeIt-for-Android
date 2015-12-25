@@ -1,9 +1,13 @@
-package de.andipaetzold.dodgeit.objects.character;
+package de.andipaetzold.dodgeit.objects.obstacles;
 
 import de.andipaetzold.dodgeit.R;
-import de.andipaetzold.dodgeit.objects.GameObject;
 
-public class Character extends GameObject {
+public class Obstacle1x1 extends Obstacle {
+    @Override
+    public void calcNewPosition(long delta) {
+
+    }
+
     @Override
     public int getWidth() {
         return 50;
@@ -16,6 +20,6 @@ public class Character extends GameObject {
 
     @Override
     public int getImg() {
-        return R.drawable.character;
+        return R.drawable.obstacle_1x1;
     }
 }

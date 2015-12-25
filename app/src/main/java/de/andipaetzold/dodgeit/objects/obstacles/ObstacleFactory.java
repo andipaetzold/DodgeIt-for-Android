@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import de.andipaetzold.dodgeit.util.Logger;
 
 public class ObstacleFactory {
-    private Class[] obstacles = new Class[]{DefaultObstacle.class};
+    private Class[] obstacles = new Class[]{Obstacle1x1.class, Obstacle2x1.class, Obstacle1x2.class};
 
     public Obstacle getObstacle() {
         int selectedObstacle = ThreadLocalRandom.current().nextInt(0, obstacles.length - 1);

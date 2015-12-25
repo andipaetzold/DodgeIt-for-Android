@@ -1,13 +1,8 @@
 package de.andipaetzold.dodgeit.objects;
 
 public abstract class GameObject {
-    protected int x = 0;
-    protected int y = 0;
-
-    protected int width;
-    protected int height;
-
-    protected int img;
+    private int x;
+    private int y;
 
     public int getX() {
         return x;
@@ -17,15 +12,9 @@ public abstract class GameObject {
         return y;
     }
 
-    public int getWidth() {
-        return width;
-    }
+    public abstract int getWidth();
 
-    public int getHeight() {
-        return height;
-    }
+    public abstract int getHeight();
 
-    public int getImg() {
-        return img;
-    }
+    public abstract int getImg();
 }
