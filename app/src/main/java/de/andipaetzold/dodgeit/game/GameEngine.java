@@ -4,45 +4,36 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import de.andipaetzold.dodgeit.objects.GameObject;
 import de.andipaetzold.dodgeit.objects.background.Background;
 import de.andipaetzold.dodgeit.objects.background.BackgroundFactory;
-import de.andipaetzold.dodgeit.objects.character.Character;
 import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
 import de.andipaetzold.dodgeit.objects.obstacles.ObstacleFactory;
 import de.andipaetzold.dodgeit.util.Point;
 
 public class GameEngine {
-    ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
-    Character character;
     private GameLoopThread gameLoopThread;
     private SurfaceView view;
 
     private BackgroundFactory backgroundFactory = new BackgroundFactory();
+    private ObstacleFactory obstacleFactory = new ObstacleFactory();
+    private CharacterFactory characterFactory = new CharacterFactory();
 
     private float scrollSpeed = 0.3f;
 
     public GameEngine(SurfaceView surfaceView) {
         gameLoopThread = new GameLoopThread(this);
         view = surfaceView;
-
-        character = new CharacterFactory().getCharacter();
     }
 
     public void update(long delta) {
         // calc
-        calcBackground(delta);
-        calcObstacles(delta);
+        backgroundFactory.calcBackgrounds(delta, scrollSpeed);
+        obstacleFactory.calcObstacles(delta, scrollSpeed);
         calcCharacter(delta);
-
-        // game action
-        spawnObstacles(delta);
-        disposeObstacles();
 
         // draw
         Canvas c = null;
@@ -65,40 +56,8 @@ public class GameEngine {
         }
     }
 
-    private void disposeObstacles() {
-        Iterator<Obstacle> iterator = obstacles.iterator();
-        while (iterator.hasNext()) {
-            Obstacle obstacle = iterator.next();
-            if (obstacle.isDisposable()) {
-                iterator.remove();
-            }
-        }
-    }
-
-    private long nextSpawn = 0;
-
-    private void spawnObstacles(long delta) {
-        nextSpawn -= delta;
-
-        if (nextSpawn <= 0) {
-            obstacles.add(new ObstacleFactory().getObstacle());
-
-            nextSpawn = 2000;
-        }
-    }
-
-    private void calcBackground(long delta) {
-        backgroundFactory.calcBackgrounds(delta, scrollSpeed);
-    }
-
-    private void calcObstacles(long delta) {
-        for (Obstacle obstacle : obstacles) {
-            obstacle.calcNewPosition(delta, scrollSpeed);
-        }
-    }
-
     private void calcCharacter(long delta) {
-        character.calcNewPosition(delta, InputEngine.getInstance().getOrientation());
+        characterFactory.getCharacter().calcNewPosition(delta, InputEngine.getInstance().getOrientation());
     }
 
     private void drawBackground(Canvas c) {
@@ -109,10 +68,11 @@ public class GameEngine {
     }
 
     private void drawCharacter(Canvas c) {
-        drawGameObject(c, character);
+        drawGameObject(c, characterFactory.getCharacter());
     }
 
     private void drawObstacles(Canvas c) {
+        List<Obstacle> obstacles = obstacleFactory.getObstacles();
         for (Obstacle obstacle : obstacles) {
             drawGameObject(c, obstacle);
         }
@@ -139,7 +99,7 @@ public class GameEngine {
             try {
                 gameLoopThread.join();
                 retry = false;
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
     }

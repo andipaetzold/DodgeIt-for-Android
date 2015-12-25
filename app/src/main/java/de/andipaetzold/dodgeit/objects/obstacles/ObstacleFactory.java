@@ -2,16 +2,53 @@ package de.andipaetzold.dodgeit.objects.obstacles;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import de.andipaetzold.dodgeit.util.Logger;
 import de.andipaetzold.dodgeit.util.RandomExtension;
 
 public class ObstacleFactory {
-    private Class[] obstacles = new Class[]{Obstacle1x1.class, Obstacle2x1.class, Obstacle1x2.class};
+    private List<Class<? extends Obstacle>> obstacleClasses = new ArrayList<Class<? extends Obstacle>>();
 
-    public Obstacle getObstacle() {
-        int selectedObstacle = RandomExtension.nextInt(0, obstacles.length - 1);
-        @SuppressWarnings("unchecked")
-        Class<? extends Obstacle> c = obstacles[selectedObstacle];
+    private List<Obstacle> obstacles = new ArrayList<Obstacle>();
+
+    public ObstacleFactory() {
+        obstacleClasses.add(Obstacle1x1.class);
+        obstacleClasses.add(Obstacle2x1.class);
+        obstacleClasses.add(Obstacle1x2.class);
+    }
+
+    private long timeUntilSpawn = 0;
+    public void calcObstacles(long delta, float scrollSpeed) {
+        // calc existing
+        Iterator<Obstacle> iterator = obstacles.iterator();
+        while (iterator.hasNext()) {
+            Obstacle obstacle = iterator.next();
+            obstacle.calcNewPosition(delta, scrollSpeed);
+            if (obstacle.isDisposable()) {
+                iterator.remove();
+            }
+        }
+
+        // spawn
+        timeUntilSpawn -= delta;
+        if (timeUntilSpawn < 0) {
+            obstacles.add(createObstacle());
+            timeUntilSpawn = 2000;
+        }
+    }
+
+
+    public List<Obstacle> getObstacles() {
+        return Collections.unmodifiableList(obstacles);
+    }
+
+    private Obstacle createObstacle() {
+        int selectedObstacle = RandomExtension.nextInt(0, obstacleClasses.size());
+        Class<? extends Obstacle> c = obstacleClasses.get(selectedObstacle);
 
         Obstacle o = null;
         try {

@@ -1,14 +1,15 @@
 package de.andipaetzold.dodgeit.objects.background;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 public class BackgroundFactory {
-    private ArrayList<Background> backgrounds = new ArrayList<Background>();
+    private List<Background> backgrounds = new ArrayList<Background>();
 
     public List<Background> getBackgrounds() {
-        return backgrounds;
+        return Collections.unmodifiableList(backgrounds);
     }
 
     public void calcBackgrounds(long delta, float scrollSpeed) {
