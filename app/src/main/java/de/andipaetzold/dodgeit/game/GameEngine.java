@@ -1,19 +1,17 @@
 package de.andipaetzold.dodgeit.game;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
 
-import de.andipaetzold.dodgeit.objects.character.Character;
-
-import de.andipaetzold.dodgeit.App;
 import de.andipaetzold.dodgeit.objects.GameObject;
+import de.andipaetzold.dodgeit.objects.character.Character;
 import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
+import de.andipaetzold.dodgeit.util.Point;
 
 public class GameEngine {
     ArrayList<Obstacle> obstacles = new ArrayList<>();
@@ -84,8 +82,9 @@ public class GameEngine {
     }
 
     private void drawGameObject(Canvas c, GameObject gameObject) {
-        Bitmap bmp = BitmapFactory.decodeResource(App.getContext().getResources(), gameObject.getImg());
-        c.drawBitmap(bmp, gameObject.getX(), gameObject.getY(), null);
+        Bitmap bmp = gameObject.getBitmap();
+        Point position = gameObject.getPosition();
+        c.drawBitmap(bmp, position.x, position.y, null);
     }
 
     public void resume() {

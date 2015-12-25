@@ -1,17 +1,18 @@
 package de.andipaetzold.dodgeit.objects.character;
 
 import de.andipaetzold.dodgeit.R;
+import de.andipaetzold.dodgeit.game.Display;
 import de.andipaetzold.dodgeit.objects.GameObject;
 
 public class Character extends GameObject {
     @Override
     public int getWidth() {
-        return 50;
+        return 128;
     }
 
     @Override
     public int getHeight() {
-        return 50;
+        return 128;
     }
 
     @Override
@@ -20,12 +21,12 @@ public class Character extends GameObject {
     }
 
     public void calcNewPosition(long delta, float[] orientation) {
-        x += orientation[2] * 10;
-        x = Math.max(x, 0);
-        x = Math.min(x, 300);
+        position.x += orientation[2] * 10;
+        position.x = Math.max(position.x, 0);
+        position.x = Math.min(position.x, Display.getWidth() - getWidth());
 
-        y -= orientation[1] * 10;
-        y = Math.max(y, 0);
-        y = Math.min(y, 300);
+        position.y -= orientation[1] * 10;
+        position.y = Math.max(position.y, 0);
+        position.y = Math.min(position.y, Display.getHeight() - getHeight());
     }
 }
