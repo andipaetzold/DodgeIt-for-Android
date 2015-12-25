@@ -5,6 +5,11 @@ import de.andipaetzold.dodgeit.game.Display;
 import de.andipaetzold.dodgeit.objects.GameObject;
 
 public class Character extends GameObject {
+    public Character() {
+        position.x = (Display.getWidth() - getWidth()) / 2;
+        position.y = Display.getHeight() - getHeight();
+    }
+
     @Override
     public int getWidth() {
         return 128;
