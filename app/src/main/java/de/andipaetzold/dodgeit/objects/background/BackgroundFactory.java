@@ -1,12 +1,8 @@
 package de.andipaetzold.dodgeit.objects.background;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import de.andipaetzold.dodgeit.util.Logger;
 
 public class BackgroundFactory {
     private ArrayList<Background> backgrounds = new ArrayList<Background>();
@@ -33,7 +29,5 @@ public class BackgroundFactory {
         if (createBackground) {
             backgrounds.add(new Background());
         }
-
-        Log.i(Logger.LOG_TAG, String.valueOf(  backgrounds.size()));
     }
 }

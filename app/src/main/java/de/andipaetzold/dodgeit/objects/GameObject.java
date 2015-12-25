@@ -1,9 +1,7 @@
 package de.andipaetzold.dodgeit.objects;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import de.andipaetzold.dodgeit.App;
 import de.andipaetzold.dodgeit.game.Display;
 import de.andipaetzold.dodgeit.util.Point;
 
@@ -20,15 +18,12 @@ public abstract class GameObject {
 
     protected abstract int getImg();
 
-    private Bitmap scaledImg = null;
     public Bitmap getBitmap() {
-        if (scaledImg == null) {
-            scaledImg = BitmapFactory.decodeResource(App.getContext().getResources(), getImg());
-            scaledImg = Bitmap.createScaledBitmap(scaledImg, getWidth(), getHeight(), false);
-            scaledImg = Display.scaleBitmap(scaledImg);
+        if (!GameObjectBitmapCache.containsBitmap(getImg())) {
+            GameObjectBitmapCache.put(getImg(), getWidth(), getHeight());
         }
 
-        return scaledImg;
+        return GameObjectBitmapCache.get(getImg());
     }
 
     public boolean isDisposable() {
