@@ -65,6 +65,7 @@ public class GameEngine {
     }
 
     private void calcCharacter(long delta) {
+        character.calcNewPosition(delta, InputEngine.getInstance().getOrientation());
     }
 
     private void drawBackground(Canvas c) {
@@ -87,11 +88,14 @@ public class GameEngine {
     }
 
     public void resume() {
+        InputEngine.getInstance().resume();
         gameLoopThread.setRunning(true);
         gameLoopThread.start();
     }
 
     public void pause() {
+        InputEngine.getInstance().pause();
+
         boolean retry = true;
         gameLoopThread.setRunning(false);
         while (retry) {

@@ -1,8 +1,8 @@
 package de.andipaetzold.dodgeit.objects;
 
 public abstract class GameObject {
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
     public int getX() {
         return x;
