@@ -1,7 +1,5 @@
 package de.andipaetzold.dodgeit.game;
 
-import android.graphics.Canvas;
-
 public class GameLoopThread extends Thread {
     static final long FPS = 60;
     private GameEngine gameEngine;
@@ -18,20 +16,16 @@ public class GameLoopThread extends Thread {
     @Override
     public void run() {
         long ticksPS = 1000 / FPS;
-
+        long sleepTime = 0;
         while (running) {
-            Canvas c = null;
             long startTime = System.currentTimeMillis();
 
-            gameEngine.update(ticksPS);
+            gameEngine.update(ticksPS + sleepTime);
 
-            long sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
+            sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
             try {
-                if (sleepTime > 0) {
-                    sleep(sleepTime);
-                } else {
-                    sleep(10);
-                }
+                sleepTime = Math.max(sleepTime, 10);
+                sleep(sleepTime);
             } catch (Exception e) {
             }
         }
