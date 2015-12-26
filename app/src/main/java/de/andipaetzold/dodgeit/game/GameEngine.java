@@ -9,6 +9,7 @@ import java.util.List;
 import de.andipaetzold.dodgeit.objects.GameObject;
 import de.andipaetzold.dodgeit.objects.background.Background;
 import de.andipaetzold.dodgeit.objects.background.BackgroundFactory;
+import de.andipaetzold.dodgeit.objects.character.Character;
 import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
 import de.andipaetzold.dodgeit.objects.obstacles.ObstacleFactory;
@@ -30,10 +31,13 @@ public class GameEngine {
     }
 
     public void update(long delta) {
-        // calc
+        // calc position
         backgroundFactory.calcBackgrounds(delta, scrollSpeed);
         obstacleFactory.calcObstacles(delta, scrollSpeed);
         calcCharacter(delta);
+
+        // check collision
+        checkCollision();
 
         // draw
         Canvas c = null;
@@ -54,6 +58,24 @@ public class GameEngine {
                 view.getHolder().unlockCanvasAndPost(c);
             }
         }
+    }
+
+    private void checkCollision() {
+        List<Obstacle> obstacles = obstacleFactory.getObstacles();
+        Character character = characterFactory.getCharacter();
+        for (Obstacle obstacle : obstacles) {
+            if (character.getPosition().x < obstacle.getPosition().x + obstacle.getWidth() &&
+                character.getPosition().x + character.getWidth()> obstacle.getPosition().x &&
+                character.getPosition().y < obstacle.getPosition().y + obstacle.getHeight() &&
+                character.getHeight() + character.getPosition().y > obstacle.getPosition().y)
+            {
+                collision();
+            }
+        }
+    }
+
+    private void collision() {
+
     }
 
     private void calcCharacter(long delta) {
