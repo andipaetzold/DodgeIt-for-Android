@@ -16,6 +16,10 @@ import de.andipaetzold.dodgeit.objects.obstacles.ObstacleFactory;
 import de.andipaetzold.dodgeit.util.Point;
 
 public class GameEngine {
+    private enum GameStatus {
+        COUNTDOWN, RUNNING, PAUSE, GAMEOVER
+    }
+
     private GameLoopThread gameLoopThread;
     private SurfaceView view;
 
@@ -24,6 +28,7 @@ public class GameEngine {
     private CharacterFactory characterFactory = new CharacterFactory();
 
     private float scrollSpeed = 0.3f;
+    private GameStatus status = GameStatus.RUNNING;
 
     public GameEngine(SurfaceView surfaceView) {
         gameLoopThread = new GameLoopThread(this);
@@ -31,13 +36,17 @@ public class GameEngine {
     }
 
     public void update(long delta) {
-        // calc position
-        backgroundFactory.calcBackgrounds(delta, scrollSpeed);
-        obstacleFactory.calcObstacles(delta, scrollSpeed);
-        calcCharacter(delta);
+        switch (status) {
+            case RUNNING:
+                // calc position
+                backgroundFactory.calcBackgrounds(delta, scrollSpeed);
+                obstacleFactory.calcObstacles(delta, scrollSpeed);
+                calcCharacter(delta);
 
-        // check collision
-        checkCollision();
+                // check collision
+                checkCollision();
+                break;
+        }
 
         // draw
         Canvas c = null;
@@ -75,7 +84,7 @@ public class GameEngine {
     }
 
     private void collision() {
-
+        status = GameStatus.GAMEOVER;
     }
 
     private void calcCharacter(long delta) {
