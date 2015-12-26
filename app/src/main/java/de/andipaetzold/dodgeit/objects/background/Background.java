@@ -5,11 +5,8 @@ import de.andipaetzold.dodgeit.game.Display;
 import de.andipaetzold.dodgeit.objects.GameObject;
 
 public class Background extends GameObject {
-    public Background() {
-        position.y = -getHeight();
-    }
-    public Background(int y) {
-        position.y = y;
+    public Background(float y) {
+        position.y = y - getHeight();
     }
 
     @Override

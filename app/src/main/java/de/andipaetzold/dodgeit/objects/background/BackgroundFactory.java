@@ -24,22 +24,22 @@ public class BackgroundFactory {
     }
 
     public void calcBackgrounds(long delta, float scrollSpeed) {
-        boolean createBackground = true;
+        float y = Float.MAX_VALUE;
 
         Iterator<Background> iterator = backgrounds.iterator();
 
         while (iterator.hasNext()) {
             Background background = iterator.next();
             background.calcNewPosition(delta, scrollSpeed);
+            y = Math.min(background.getPosition().y, y);
+
             if (background.isDisposable()) {
                 iterator.remove();
-            } else if (background.getPosition().y <= 0) {
-                createBackground = false;
             }
         }
 
-        if (createBackground) {
-            backgrounds.add(new Background());
+        if (y > 0) {
+            backgrounds.add(new Background(y));
         }
     }
 }
