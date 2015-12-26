@@ -74,10 +74,9 @@ public class GameEngine {
         Character character = characterFactory.getCharacter();
         for (Obstacle obstacle : obstacles) {
             if (character.getPosition().x < obstacle.getPosition().x + obstacle.getWidth() &&
-                character.getPosition().x + character.getWidth()> obstacle.getPosition().x &&
-                character.getPosition().y < obstacle.getPosition().y + obstacle.getHeight() &&
-                character.getHeight() + character.getPosition().y > obstacle.getPosition().y)
-            {
+                    character.getPosition().x + character.getWidth() > obstacle.getPosition().x &&
+                    character.getPosition().y < obstacle.getPosition().y + obstacle.getHeight() &&
+                    character.getHeight() + character.getPosition().y > obstacle.getPosition().y) {
                 collision();
             }
         }
