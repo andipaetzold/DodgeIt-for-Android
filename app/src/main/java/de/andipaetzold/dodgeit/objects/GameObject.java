@@ -1,6 +1,7 @@
 package de.andipaetzold.dodgeit.objects;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 import de.andipaetzold.dodgeit.game.Display;
 import de.andipaetzold.dodgeit.util.Point;
@@ -24,6 +25,11 @@ public abstract class GameObject {
         }
 
         return GameObjectBitmapCache.get(getImg());
+    }
+
+    public void draw(Canvas c) {
+        Point p = Display.scalePosition(position);
+        c.drawBitmap(getBitmap(), p.x, p.y, null);
     }
 
     public boolean isDisposable() {

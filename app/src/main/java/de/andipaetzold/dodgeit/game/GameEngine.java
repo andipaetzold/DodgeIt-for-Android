@@ -1,19 +1,16 @@
 package de.andipaetzold.dodgeit.game;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.SurfaceView;
 
 import java.util.List;
 
-import de.andipaetzold.dodgeit.objects.GameObject;
 import de.andipaetzold.dodgeit.objects.background.Background;
 import de.andipaetzold.dodgeit.objects.background.BackgroundFactory;
 import de.andipaetzold.dodgeit.objects.character.Character;
 import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
 import de.andipaetzold.dodgeit.objects.obstacles.ObstacleFactory;
-import de.andipaetzold.dodgeit.util.Point;
 
 public class GameEngine {
     private enum GameStatus {
@@ -93,25 +90,19 @@ public class GameEngine {
     private void drawBackground(Canvas c) {
         List<Background> backgrounds = backgroundFactory.getBackgrounds();
         for (Background background : backgrounds) {
-            drawGameObject(c, background);
+            background.draw(c);
         }
     }
 
     private void drawCharacter(Canvas c) {
-        drawGameObject(c, characterFactory.getCharacter());
+        characterFactory.getCharacter().draw(c);
     }
 
     private void drawObstacles(Canvas c) {
         List<Obstacle> obstacles = obstacleFactory.getObstacles();
         for (Obstacle obstacle : obstacles) {
-            drawGameObject(c, obstacle);
+            obstacle.draw(c);
         }
-    }
-
-    private void drawGameObject(Canvas c, GameObject gameObject) {
-        Bitmap bmp = gameObject.getBitmap();
-        Point position = gameObject.getPosition();
-        c.drawBitmap(bmp, position.x, position.y, null);
     }
 
     public void resume() {
