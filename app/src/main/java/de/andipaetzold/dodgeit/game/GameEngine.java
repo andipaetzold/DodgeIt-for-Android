@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceView;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import de.andipaetzold.dodgeit.objects.background.Background;
@@ -23,15 +25,18 @@ public class GameEngine {
     private SurfaceView view;
 
     private BackgroundFactory backgroundFactory = new BackgroundFactory();
-    private ObstacleFactory obstacleFactory = new ObstacleFactory();
+    private ObstacleFactory obstacleFactory = new ObstacleFactory(this);
     private CharacterFactory characterFactory = new CharacterFactory();
 
     private float scrollSpeed = 0.3f;
     private GameStatus status = GameStatus.RUNNING;
 
-    private int points = 0;
+    private float score = 0;
+    private float time = 0;
 
     public GameEngine(SurfaceView surfaceView) {
+        obstacleFactory = new ObstacleFactory(this);
+
         gameLoopThread = new GameLoopThread(this);
         view = surfaceView;
     }
@@ -43,6 +48,12 @@ public class GameEngine {
                 backgroundFactory.calcBackgrounds(delta, scrollSpeed);
                 obstacleFactory.calcObstacles(delta, scrollSpeed);
                 calcCharacter(delta);
+
+                // add time
+                time += delta * 0.001f;
+
+                // add points
+                addPoints(delta * 0.01f);
 
                 // check collision
                 checkCollision();
@@ -89,6 +100,10 @@ public class GameEngine {
         status = GameStatus.GAMEOVER;
     }
 
+    public void addPoints(float points) {
+        score += points * scrollSpeed;
+    }
+
     private void calcCharacter(long delta) {
         characterFactory.getCharacter().calcNewPosition(delta, InputEngine.getInstance().getOrientation());
     }
@@ -115,7 +130,12 @@ public class GameEngine {
         Paint p = new Paint();
         p.setColor(Color.WHITE);
         p.setTextSize(16);
-        c.drawText(String.valueOf(points), 20, 20, p);
+
+        DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.DOWN);
+
+        c.drawText(df.format(score), 20, 20, p);
+        c.drawText(df.format(time), 20, 50, p);
     }
 
     public void engineResume() {

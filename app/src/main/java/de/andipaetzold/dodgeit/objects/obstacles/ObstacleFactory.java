@@ -7,15 +7,19 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import de.andipaetzold.dodgeit.game.GameEngine;
 import de.andipaetzold.dodgeit.util.Logger;
 import de.andipaetzold.dodgeit.util.RandomExtension;
 
 public class ObstacleFactory {
+    private final GameEngine gameEngine;
     private List<Class<? extends Obstacle>> obstacleClasses = new ArrayList<Class<? extends Obstacle>>();
 
     private List<Obstacle> obstacles = new ArrayList<Obstacle>();
 
-    public ObstacleFactory() {
+    public ObstacleFactory(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+        
         obstacleClasses.add(Obstacle1x1.class);
         obstacleClasses.add(Obstacle2x1.class);
         obstacleClasses.add(Obstacle1x2.class);
@@ -29,6 +33,7 @@ public class ObstacleFactory {
             Obstacle obstacle = iterator.next();
             obstacle.calcNewPosition(delta, scrollSpeed);
             if (obstacle.isDisposable()) {
+                gameEngine.addPoints(obstacle.getPoints() * 0.005f);
                 iterator.remove();
             }
         }
