@@ -19,20 +19,21 @@ public class Display {
         wm.getDefaultDisplay().getMetrics(metrics);
     }
 
-    public static Point scalePosition(Point p) {
-        float scale = metrics.widthPixels / (float) width;
+    private static float getScale() {
+       return metrics.widthPixels / (float) width;
+    }
 
-        float x = p.x * scale;
-        float y = p.y * scale;
-        y += metrics.heightPixels - (height * scale);
+    public static Point scalePosition(Point p) {
+
+        float x = p.x * getScale();
+        float y = p.y * getScale();
+        y += metrics.heightPixels - (height * getScale());
 
         return new Point(x, y);
     }
 
     public static Bitmap scaleBitmap(Bitmap bmp) {
-        float scale = metrics.widthPixels / (float) width;
-
-        return Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() * scale), (int) (bmp.getHeight() * scale), false);
+        return Bitmap.createScaledBitmap(bmp, (int) (bmp.getWidth() * getScale()), (int) (bmp.getHeight() * getScale()), false);
     }
 
     public static int getWidth() {

@@ -10,7 +10,7 @@ public abstract class GameObject {
     protected Point position = new Point(0, 0);
 
     public Point getPosition() {
-        return Display.scalePosition(position);
+        return position;
     }
 
     public abstract int getWidth();
