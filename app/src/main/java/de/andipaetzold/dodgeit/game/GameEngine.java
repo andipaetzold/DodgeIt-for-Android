@@ -1,6 +1,8 @@
 package de.andipaetzold.dodgeit.game;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.SurfaceView;
 
 import java.util.List;
@@ -26,6 +28,8 @@ public class GameEngine {
 
     private float scrollSpeed = 0.3f;
     private GameStatus status = GameStatus.RUNNING;
+
+    private int points = 0;
 
     public GameEngine(SurfaceView surfaceView) {
         gameLoopThread = new GameLoopThread(this);
@@ -58,6 +62,7 @@ public class GameEngine {
                 drawBackground(c);
                 drawObstacles(c);
                 drawCharacter(c);
+                drawText(c);
             }
         } finally {
             if (c != null) {
@@ -75,6 +80,7 @@ public class GameEngine {
                     character.getPosition().y < obstacle.getPosition().y + obstacle.getHeight() &&
                     character.getHeight() + character.getPosition().y > obstacle.getPosition().y) {
                 collision();
+                return;
             }
         }
     }
@@ -105,13 +111,40 @@ public class GameEngine {
         }
     }
 
-    public void resume() {
+    private void drawText(Canvas c) {
+        Paint p = new Paint();
+        p.setColor(Color.WHITE);
+        p.setTextSize(16);
+        c.drawText(String.valueOf(points), 20, 20, p);
+    }
+
+    public void engineResume() {
         InputEngine.getInstance().resume();
         gameLoopThread.restart();
     }
 
-    public void pause() {
+    public void enginePause() {
         InputEngine.getInstance().pause();
         gameLoopThread.pause();
+    }
+
+    private GameStatus tmpGameStatus;
+
+    public void onClick() {
+        switch (status) {
+            case COUNTDOWN:
+            case RUNNING:
+                tmpGameStatus = status;
+                status = GameStatus.PAUSE;
+                break;
+
+            case PAUSE:
+                status = tmpGameStatus;
+                break;
+
+            case GAMEOVER:
+                // TODO restart
+                break;
+        }
     }
 }

@@ -3,11 +3,13 @@ package de.andipaetzold.dodgeit.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 import de.andipaetzold.dodgeit.R;
 import de.andipaetzold.dodgeit.game.GameEngine;
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements OnClickListener {
     private GameEngine gameEngine;
 
     @Override
@@ -15,19 +17,30 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        SurfaceView view = (SurfaceView) findViewById(R.id.game_surfaceview_game);
-        gameEngine = new GameEngine(view);
+        SurfaceView sv = (SurfaceView) findViewById(R.id.game_surfaceview_game);
+        sv.setOnClickListener(this);
+
+        gameEngine = new GameEngine(sv);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        gameEngine.resume();
+        gameEngine.engineResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        gameEngine.pause();
+        gameEngine.enginePause();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.game_surfaceview_game:
+                gameEngine.onClick();
+                break;
+        }
     }
 }
