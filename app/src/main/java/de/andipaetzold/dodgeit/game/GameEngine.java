@@ -9,6 +9,8 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import de.andipaetzold.dodgeit.leaderboard.Leaderboard;
+import de.andipaetzold.dodgeit.leaderboard.LeaderboardRecord;
 import de.andipaetzold.dodgeit.objects.background.Background;
 import de.andipaetzold.dodgeit.objects.background.BackgroundFactory;
 import de.andipaetzold.dodgeit.objects.character.Character;
@@ -42,22 +44,20 @@ public class GameEngine {
     }
 
     public void update(long delta) {
-        switch (status) {
-            case RUNNING:
-                // calc position
-                backgroundFactory.calcBackgrounds(delta, scrollSpeed);
-                obstacleFactory.calcObstacles(delta, scrollSpeed);
-                calcCharacter(delta);
+        if (status == GameStatus.RUNNING) {
+            // calc position
+            backgroundFactory.calcBackgrounds(delta, scrollSpeed);
+            obstacleFactory.calcObstacles(delta, scrollSpeed);
+            calcCharacter(delta);
 
-                // add time
-                time += delta * 0.001f;
+            // add time
+            time += delta * 0.001f;
 
-                // add points
-                addPoints(delta * 0.01f);
+            // add points
+            addPoints(delta * 0.01f);
 
-                // check collision
-                checkCollision();
-                break;
+            // check collision
+            checkCollision();
         }
 
         // draw
@@ -98,6 +98,8 @@ public class GameEngine {
 
     private void collision() {
         status = GameStatus.GAMEOVER;
+
+        Leaderboard.getInstance().submitScore(new LeaderboardRecord("Demo", (int) score));
     }
 
     public void addPoints(float points) {
