@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <TextView
@@ -10,15 +10,15 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:gravity="right"
-        android:textSize="20sp"
-        android:paddingRight="10dp" />
+        android:paddingRight="16dp"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/leaderboard_textview_name"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="8"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/leaderboard_textview_score"
@@ -26,6 +26,6 @@
         android:layout_height="match_parent"
         android:layout_weight="4"
         android:gravity="right"
-        android:textSize="20sp"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="10dp"
+        android:textSize="18sp" />
 </LinearLayout>

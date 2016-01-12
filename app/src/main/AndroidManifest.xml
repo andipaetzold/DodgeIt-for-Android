@@ -21,16 +21,23 @@
         <activity
             android:name=".activities.GameActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:parentActivityName=".activities.MenuActivity" />
         <activity
             android:name=".activities.LeaderboardActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/leaderboard_title"
+            android:parentActivityName=".activities.MenuActivity" />
         <activity
             android:name=".activities.SettingsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/settings_title"
+            android:parentActivityName=".activities.MenuActivity" />
         <activity
             android:name=".activities.AboutActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:label="@string/about_title"
+            android:parentActivityName=".activities.MenuActivity" />
     </application>
 
 </manifest>
