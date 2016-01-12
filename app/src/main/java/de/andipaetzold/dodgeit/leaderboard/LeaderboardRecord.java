@@ -19,6 +19,6 @@ public class LeaderboardRecord implements Comparable<LeaderboardRecord> {
 
     @Override
     public int compareTo(LeaderboardRecord another) {
-        return score - another.score;
+        return another.score - score;
     }
 }
