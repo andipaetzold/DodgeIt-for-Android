@@ -13,4 +13,23 @@
 
     tools:context=".activities.AboutActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_text_1"
+        android:textSize="21sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_text_2"
+        android:textSize="21sp" />
+
+    <Button
+        android:id="@+id/about_button_github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_button_github" />
 </LinearLayout>

@@ -7,4 +7,7 @@
     <string name="settings_title">Settings</string>
     <string name="leaderboard_title">Leaderboard</string>
     <string name="about_title">About</string>
+    <string name="about_text_2">I hope you enjoy the game have much fun! When you\'re bored and you have an idea to improve the game you can help me develop it on GitHub.</string>
+    <string name="about_text_1">This magnificent and awesome game was created as an android project at the University of Applied Sciences Hagenberg. The images were created with a high end image editing tool called GIMP. The original images were downloaded from a small and rarely known search engine called Google.</string>
+    <string name="about_button_github">Visit project on GitHub</string>
 </resources>
