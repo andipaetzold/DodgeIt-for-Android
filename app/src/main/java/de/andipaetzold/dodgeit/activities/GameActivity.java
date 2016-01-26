@@ -104,7 +104,7 @@ public class GameActivity extends Activity implements OnClickListener {
             time += delta * 0.001f;
 
             // add points
-            addPoints(delta * 0.01f);
+            addPoints(delta * 0.09f);
 
             // check collision
             checkCollision();
