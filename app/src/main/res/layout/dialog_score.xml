@@ -8,7 +8,8 @@
         android:id="@+id/nameDialog_editText_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Please enter your name" />
+        android:hint="Please enter your name"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/nameDialog_button_send"
