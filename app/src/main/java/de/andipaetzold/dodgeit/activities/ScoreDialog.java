@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.firebase.client.Firebase;
+
+import de.andipaetzold.dodgeit.App;
 import de.andipaetzold.dodgeit.R;
-import de.andipaetzold.dodgeit.leaderboard.Leaderboard;
-import de.andipaetzold.dodgeit.leaderboard.LeaderboardRecord;
 
 public class ScoreDialog extends DialogFragment implements View.OnClickListener {
     private EditText editText;
@@ -45,7 +46,10 @@ public class ScoreDialog extends DialogFragment implements View.OnClickListener 
                 String name = editText.getText().toString();
 
                 if (name != "") {
-                    Leaderboard.getInstance().submitScore(new LeaderboardRecord(name, score));
+                    Firebase.setAndroidContext(App.getContext());
+                    Firebase newScoreRef = new Firebase("https://dodgeit.firebaseio.com").child("score").push();
+                    newScoreRef.child("name").setValue(name);
+                    newScoreRef.child("score").setValue(score);
                 }
 
                 getDialog().dismiss();
