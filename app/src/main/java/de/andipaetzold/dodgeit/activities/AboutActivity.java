@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import de.andipaetzold.dodgeit.R;
+import de.andipaetzold.dodgeit.util.BackgroundMusic;
 
 public class AboutActivity extends Activity implements View.OnClickListener {
 
@@ -25,5 +26,17 @@ public class AboutActivity extends Activity implements View.OnClickListener {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/andipaetzold/DodgeIt-for-Android")));
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BackgroundMusic.getInstance().Play();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BackgroundMusic.getInstance().Pause();
     }
 }

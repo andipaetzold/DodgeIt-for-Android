@@ -17,6 +17,7 @@ import java.util.List;
 import de.andipaetzold.dodgeit.R;
 import de.andipaetzold.dodgeit.leaderboard.LeaderboardAdapter;
 import de.andipaetzold.dodgeit.leaderboard.LeaderboardRecord;
+import de.andipaetzold.dodgeit.util.BackgroundMusic;
 
 public class LeaderboardActivity extends Activity {
 
@@ -55,5 +56,17 @@ public class LeaderboardActivity extends Activity {
         });
 
         Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BackgroundMusic.getInstance().Play();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BackgroundMusic.getInstance().Pause();
     }
 }

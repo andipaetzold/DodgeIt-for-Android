@@ -24,6 +24,7 @@ import de.andipaetzold.dodgeit.objects.background.BackgroundFactory;
 import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
 import de.andipaetzold.dodgeit.objects.obstacles.ObstacleFactory;
+import de.andipaetzold.dodgeit.util.BackgroundMusic;
 
 public class GameActivity extends Activity implements OnClickListener {
     private enum GameStatus {
@@ -60,6 +61,7 @@ public class GameActivity extends Activity implements OnClickListener {
         super.onResume();
         InputEngine.getInstance().resume();
         gameLoopThread.restart();
+        BackgroundMusic.getInstance().Play();
     }
 
     @Override
@@ -67,6 +69,7 @@ public class GameActivity extends Activity implements OnClickListener {
         super.onPause();
         InputEngine.getInstance().pause();
         gameLoopThread.pause();
+        BackgroundMusic.getInstance().Pause();
     }
 
     private GameStatus tmpGameStatus;

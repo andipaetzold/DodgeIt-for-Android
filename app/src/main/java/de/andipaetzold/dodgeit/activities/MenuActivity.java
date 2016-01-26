@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import de.andipaetzold.dodgeit.R;
+import de.andipaetzold.dodgeit.util.BackgroundMusic;
 
 public class MenuActivity extends Activity implements View.OnClickListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,5 +36,17 @@ public class MenuActivity extends Activity implements View.OnClickListener {
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BackgroundMusic.getInstance().Play();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        BackgroundMusic.getInstance().Pause();
     }
 }
