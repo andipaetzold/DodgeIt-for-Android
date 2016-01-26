@@ -1,12 +1,14 @@
 package de.andipaetzold.dodgeit.game;
 
+import de.andipaetzold.dodgeit.activities.GameActivity;
+
 public class GameLoopThread extends Thread {
     static final long FPS = 60;
-    private GameEngine gameEngine;
+    private GameActivity gameActivity;
     private boolean running = false;
 
-    public GameLoopThread(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public GameLoopThread(GameActivity gameActivity) {
+        this.gameActivity = gameActivity;
     }
 
     @Override
@@ -16,7 +18,7 @@ public class GameLoopThread extends Thread {
         while (running) {
             long startTime = System.currentTimeMillis();
 
-            gameEngine.update(ticksPS + sleepTime);
+            gameActivity.update(ticksPS + sleepTime);
 
             sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
             try {

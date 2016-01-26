@@ -24,12 +24,12 @@ public class InputEngine implements SensorEventListener {
         magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
 
-    protected void resume() {
+    public void resume() {
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
-    protected void pause() {
+    public void pause() {
         sensorManager.unregisterListener(this);
     }
 
