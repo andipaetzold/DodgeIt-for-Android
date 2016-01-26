@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 import de.andipaetzold.dodgeit.R;
+import de.andipaetzold.dodgeit.game.Display;
 import de.andipaetzold.dodgeit.game.GameLoopThread;
 import de.andipaetzold.dodgeit.game.InputEngine;
 import de.andipaetzold.dodgeit.objects.background.Background;
@@ -68,6 +70,7 @@ public class GameActivity extends Activity implements OnClickListener {
     }
 
     private GameStatus tmpGameStatus;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -185,14 +188,23 @@ public class GameActivity extends Activity implements OnClickListener {
     }
 
     private void drawText(Canvas c) {
-        Paint p = new Paint();
-        p.setColor(Color.WHITE);
-        p.setTextSize(16);
-
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.DOWN);
 
-        c.drawText(df.format(score), 20, 20, p);
-        c.drawText(df.format(time), 20, 50, p);
+        Paint p = new Paint();
+        p.setColor(Color.WHITE);
+        p.setTextSize(Display.scale(50));
+
+        Rect bounds = new Rect();
+
+        // score
+        String scoreText = df.format(score);
+        p.getTextBounds(scoreText, 0, scoreText.length(), bounds);
+        c.drawText(scoreText, Display.scale(5), Display.scale(bounds.height() + 3), p);
+
+        // time
+        String timeText = df.format(time);
+        p.getTextBounds(timeText, 0, timeText.length(), bounds);
+        c.drawText(timeText, Display.scale(Display.getWidth() - bounds.width() - 3), Display.scale(bounds.height() + 3), p);
     }
 }

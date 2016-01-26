@@ -23,6 +23,15 @@ public class Display {
        return metrics.widthPixels / (float) width;
     }
 
+    public static float scale(float x) {
+        return getScale() * x;
+    }
+
+
+    public static int scale(int x) {
+        return (int) (getScale() * x);
+    }
+
     public static Point scalePosition(Point p) {
 
         float x = p.x * getScale();
