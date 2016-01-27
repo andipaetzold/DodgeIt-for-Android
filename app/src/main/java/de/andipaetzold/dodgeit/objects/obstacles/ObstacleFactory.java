@@ -7,8 +7,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import de.andipaetzold.dodgeit.App;
 import de.andipaetzold.dodgeit.activities.GameActivity;
-import de.andipaetzold.dodgeit.util.Logger;
 import de.andipaetzold.dodgeit.util.RandomExtension;
 
 public class ObstacleFactory {
@@ -58,9 +58,9 @@ public class ObstacleFactory {
         try {
             o = c.newInstance();
         } catch (InstantiationException e) {
-            Log.e(Logger.LOG_TAG, "Error instantiating an obstacle.", e);
+            Log.e(App.LOG_TAG, "Error instantiating an obstacle.", e);
         } catch (IllegalAccessException e) {
-            Log.e(Logger.LOG_TAG, "Error instantiating an obstacle.", e);
+            Log.e(App.LOG_TAG, "Error instantiating an obstacle.", e);
         }
 
         return o;

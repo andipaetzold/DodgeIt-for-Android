@@ -62,7 +62,7 @@ public class GameActivity extends Activity implements OnClickListener {
         super.onResume();
         InputEngine.getInstance().resume();
         gameLoopThread.restart();
-        BackgroundMusic.getInstance().Play();
+        BackgroundMusic.Play();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class GameActivity extends Activity implements OnClickListener {
         super.onPause();
         InputEngine.getInstance().pause();
         gameLoopThread.pause();
-        BackgroundMusic.getInstance().Pause();
+        BackgroundMusic.Pause();
     }
 
     private GameStatus tmpGameStatus;
@@ -152,7 +152,7 @@ public class GameActivity extends Activity implements OnClickListener {
     }
 
     private void collision() {
-        SoundEffects.getInstance().Play(R.raw.crash);
+        SoundEffects.Play(R.raw.crash);
 
         status = GameStatus.GAMEOVER;
 

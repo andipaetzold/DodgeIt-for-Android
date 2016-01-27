@@ -10,9 +10,10 @@ import de.andipaetzold.dodgeit.R;
 
 public class SoundEffects {
     private static SoundEffects instance = new SoundEffects();
-    private Map<Integer, MediaPlayer> mediaPlayers = new HashMap<Integer, MediaPlayer>();
+    private static boolean mute = false;
+    private static Map<Integer, MediaPlayer> mediaPlayers = new HashMap<Integer, MediaPlayer>();
 
-    public SoundEffects() {
+    static {
         int[] soundResources = new int[]{R.raw.crash};
 
         for (int res : soundResources) {
@@ -20,11 +21,9 @@ public class SoundEffects {
         }
     }
 
-    public static SoundEffects getInstance() {
-        return instance;
-    }
-
-    public void Play(int res) {
-        mediaPlayers.get(res).start();
+    public static void Play(int res) {
+        if (!Preferences.getSFXMuted()) {
+            mediaPlayers.get(res).start();
+        }
     }
 }

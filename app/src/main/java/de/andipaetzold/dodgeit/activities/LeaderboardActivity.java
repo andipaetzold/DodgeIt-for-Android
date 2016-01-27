@@ -61,12 +61,12 @@ public class LeaderboardActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        BackgroundMusic.getInstance().Play();
+        BackgroundMusic.Play();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        BackgroundMusic.getInstance().Pause();
+        BackgroundMusic.Pause();
     }
 }

@@ -13,4 +13,15 @@
 
     tools:context=".activities.SettingsActivity">
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Music"
+        android:id="@+id/settings_checkbox_music"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sound Effects"
+        android:id="@+id/settings_checkbox_sfx"/>
 </LinearLayout>

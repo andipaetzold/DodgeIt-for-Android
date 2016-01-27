@@ -31,12 +31,12 @@ public class AboutActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        BackgroundMusic.getInstance().Play();
+        BackgroundMusic.Play();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        BackgroundMusic.getInstance().Pause();
+        BackgroundMusic.Pause();
     }
 }
