@@ -26,12 +26,13 @@ public class LeaderboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
 
+        final LeaderboardAdapter adapter = new LeaderboardAdapter(LeaderboardActivity.this);
+
         Firebase.setAndroidContext(getApplicationContext());
-        Firebase firebaseRef = new Firebase("https://dodgeit.firebaseio.com");
+        final Firebase firebaseRef = new Firebase("https://dodgeit.firebaseio.com");
         firebaseRef.child("score").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 List<LeaderboardRecord> records = new ArrayList<LeaderboardRecord>();
                 for (DataSnapshot recordSnap : dataSnapshot.getChildren()) {
                     String name = (String) recordSnap.child("name").getValue();
@@ -42,18 +43,20 @@ public class LeaderboardActivity extends Activity {
 
                 Collections.sort(records);
 
-                final LeaderboardAdapter adapter = new LeaderboardAdapter(LeaderboardActivity.this);
+                adapter.clear();
                 adapter.addAll(records);
-                ((ListView) findViewById(R.id.leaderboard_listview_list)).setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(),"An error occurred", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT).show();
 
                 LeaderboardActivity.this.finish();
             }
         });
+
+        ((ListView) findViewById(R.id.leaderboard_listview_list)).setAdapter(adapter);
 
         Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
     }

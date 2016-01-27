@@ -11,6 +11,9 @@ import android.widget.EditText;
 
 import com.firebase.client.Firebase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.andipaetzold.dodgeit.App;
 import de.andipaetzold.dodgeit.R;
 
@@ -48,8 +51,12 @@ public class ScoreDialog extends DialogFragment implements View.OnClickListener 
                 if (name != "") {
                     Firebase.setAndroidContext(App.getContext());
                     Firebase newScoreRef = new Firebase("https://dodgeit.firebaseio.com").child("score").push();
-                    newScoreRef.child("name").setValue(name);
-                    newScoreRef.child("score").setValue(score);
+
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("name", name);
+                    map.put("score", score);
+
+                    newScoreRef.updateChildren(map);
                 }
 
                 getDialog().dismiss();
