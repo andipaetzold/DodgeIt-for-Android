@@ -23,6 +23,8 @@ public class ObstacleFactory {
         obstacleClasses.add(Obstacle1x1.class);
         obstacleClasses.add(Obstacle2x1.class);
         obstacleClasses.add(Obstacle1x2.class);
+        obstacleClasses.add(ObstacleDoubleSpeed.class);
+        obstacleClasses.add(ObstacleLeftRight.class);
     }
 
     private long timeUntilSpawn = 0;
