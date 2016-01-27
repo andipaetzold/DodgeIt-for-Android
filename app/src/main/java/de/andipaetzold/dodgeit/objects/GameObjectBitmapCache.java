@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.andipaetzold.dodgeit.App;
-import de.andipaetzold.dodgeit.game.Display;
 
 public class GameObjectBitmapCache {
     private static Map<Integer, Bitmap> map = new HashMap<Integer, Bitmap>();
@@ -16,10 +15,9 @@ public class GameObjectBitmapCache {
         return map.containsKey(ressourceId);
     }
 
-    public static void put(int ressourceId, int width, int height) {
-        Bitmap bmp = BitmapFactory.decodeResource(App.getContext().getResources(), ressourceId);
-        bmp = Bitmap.createScaledBitmap(bmp, width, height, false);
-        map.put(ressourceId, Display.scaleBitmap(bmp));
+    public static void put(int resourceId, int width, int height) {
+        Bitmap bmp = BitmapFactory.decodeResource(App.getContext().getResources(), resourceId);
+        map.put(resourceId, Bitmap.createScaledBitmap(bmp, width, height, false));
     }
 
     public static Bitmap get(int ressourceId) {

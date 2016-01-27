@@ -28,8 +28,7 @@ public abstract class GameObject {
     }
 
     public void draw(Canvas c) {
-        Point p = Display.scalePosition(position);
-        c.drawBitmap(getBitmap(), p.x, p.y, null);
+        c.drawBitmap(getBitmap(), position.x, position.y, null);
     }
 
     public boolean isDisposable() {
