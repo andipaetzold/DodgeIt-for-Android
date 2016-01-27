@@ -3,7 +3,9 @@ package de.andipaetzold.dodgeit.game;
 import de.andipaetzold.dodgeit.activities.GameActivity;
 
 public class GameLoopThread extends Thread {
-    static final long FPS = 60;
+    private int TICKS_PER_SECOND = 30;
+    private int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+
     private GameActivity gameActivity;
     private boolean running = false;
 
@@ -13,18 +15,25 @@ public class GameLoopThread extends Thread {
 
     @Override
     public void run() {
-        long ticksPS = 1000 / FPS;
         long sleepTime = 0;
+        long nextTick  = System.currentTimeMillis();
+
         while (running) {
-            long startTime = System.currentTimeMillis();
+            if (sleepTime > 0) {
+                gameActivity.update(SKIP_TICKS - sleepTime);
+            }
+            else {
+                gameActivity.update(SKIP_TICKS);
+            }
 
-            gameActivity.update(ticksPS + sleepTime);
-
-            sleepTime = ticksPS - (System.currentTimeMillis() - startTime);
-            try {
-                sleepTime = Math.max(sleepTime, 10);
-                sleep(sleepTime);
-            } catch (Exception e) {
+            nextTick += SKIP_TICKS;
+            sleepTime = nextTick  - System.currentTimeMillis();
+            if (sleepTime > 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
