@@ -13,6 +13,12 @@
 
     tools:context=".activities.LeaderboardActivity">
 
+    <TextView
+        android:id="@+id/leaderboard_textview_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/leaderboard_textview_loading"/>
+
     <ListView
         android:id="@+id/leaderboard_listview_list"
         android:layout_width="match_parent"

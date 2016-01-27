@@ -2,6 +2,7 @@ package de.andipaetzold.dodgeit.activities;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import java.util.Map;
 import de.andipaetzold.dodgeit.App;
 import de.andipaetzold.dodgeit.R;
 
-public class ScoreDialog extends DialogFragment implements View.OnClickListener {
+public class ScoreDialog extends DialogFragment implements View.OnClickListener{
     private EditText editText;
 
     private int score;
@@ -60,7 +61,6 @@ public class ScoreDialog extends DialogFragment implements View.OnClickListener 
                 }
 
                 getDialog().dismiss();
-                activity.finish();
                 break;
         }
     }
@@ -71,5 +71,12 @@ public class ScoreDialog extends DialogFragment implements View.OnClickListener 
 
     public void setActivity(Activity activity) {
         this.activity = activity;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+        activity.finish();
     }
 }

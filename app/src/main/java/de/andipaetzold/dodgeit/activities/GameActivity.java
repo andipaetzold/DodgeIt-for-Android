@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -64,6 +65,9 @@ public class GameActivity extends Activity implements OnClickListener {
 
         obstacleFactory = new ObstacleFactory(this);
         gameLoopThread = new GameLoopThread(this);
+
+
+        Toast.makeText(getApplicationContext(), "Tap to pause", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -147,7 +151,7 @@ public class GameActivity extends Activity implements OnClickListener {
             synchronized (surfaceView.getHolder()) {
                 Rect src = new Rect(0,0,bitmap.getWidth()-1, bitmap.getHeight()-1);
                 Rect dest = new Rect(0,0,surfaceView.getWidth()-1, surfaceView.getHeight()-1);
-                c.drawBitmap(bitmap, src, dest, null);;
+                c.drawBitmap(bitmap, src, dest, null);
             }
         } finally {
             if (c != null) {

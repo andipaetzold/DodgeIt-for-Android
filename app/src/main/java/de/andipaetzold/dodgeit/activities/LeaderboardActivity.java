@@ -1,8 +1,13 @@
 package de.andipaetzold.dodgeit.activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -26,10 +31,19 @@ public class LeaderboardActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
 
+        // check internet connection
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
+            ((TextView)findViewById(R.id.leaderboard_textview_status)).setText(R.string.leaderboard_textview_offline);
+        }
+
+        // update list
         final LeaderboardAdapter adapter = new LeaderboardAdapter(LeaderboardActivity.this);
 
         Firebase.setAndroidContext(getApplicationContext());
-        final Firebase firebaseRef = new Firebase("https://dodgeit.firebaseio.com");
+        Firebase firebaseRef = new Firebase("https://dodgeit.firebaseio.com");
+
         firebaseRef.child("score").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -43,6 +57,9 @@ public class LeaderboardActivity extends Activity {
 
                 Collections.sort(records);
 
+                findViewById(R.id.leaderboard_textview_status).setVisibility(View.GONE);
+                findViewById(R.id.leaderboard_listview_list).setVisibility(View.VISIBLE);
+
                 adapter.clear();
                 adapter.addAll(records);
                 adapter.notifyDataSetChanged();
@@ -51,14 +68,12 @@ public class LeaderboardActivity extends Activity {
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT).show();
-
                 LeaderboardActivity.this.finish();
             }
         });
 
+        findViewById(R.id.leaderboard_listview_list).setVisibility(View.GONE);
         ((ListView) findViewById(R.id.leaderboard_listview_list)).setAdapter(adapter);
-
-        Toast.makeText(getApplicationContext(), "Loading...", Toast.LENGTH_LONG).show();
     }
 
     @Override
