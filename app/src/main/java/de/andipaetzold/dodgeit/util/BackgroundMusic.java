@@ -7,8 +7,7 @@ import de.andipaetzold.dodgeit.R;
 
 public class BackgroundMusic implements MediaPlayer.OnCompletionListener {
     private int current = 0;
-    private int[] soundResources = new int[] { R.raw.music01, R.raw.music02, R.raw.music03};
-    private MediaPlayer player;
+    private MediaPlayer[] mediaPlayers;
 
     private static BackgroundMusic instance = new BackgroundMusic();
     public static BackgroundMusic getInstance() {
@@ -16,37 +15,40 @@ public class BackgroundMusic implements MediaPlayer.OnCompletionListener {
     }
 
     public BackgroundMusic() {
-        playSong(soundResources[current]);
+        int[] soundResources = new int[] { R.raw.music01, R.raw.music02, R.raw.music03};
+
+        mediaPlayers = new MediaPlayer[soundResources.length];
+        for(int i = 0; i <= soundResources.length - 1; i++) {
+            mediaPlayers[i] = MediaPlayer.create(App.getContext(), soundResources[i]);
+            mediaPlayers[i].setOnCompletionListener(this);
+        }
+
+        Play();
     }
 
     public void Play() {
-        if (!player.isPlaying()) {
-            player.start();
+        if (!mediaPlayers[current].isPlaying()) {
+            mediaPlayers[current].start();
         }
     }
 
     public void Pause() {
-        if (player.isPlaying()) {
-            player.pause();
+        if (mediaPlayers[current].isPlaying()) {
+            mediaPlayers[current].pause();
         }
+    }
+
+    public void Mute() {
+        mediaPlayers[current].setVolume(0, 0);
+    }
+
+    public void Unmute() {
+        mediaPlayers[current].setVolume(1, 1);
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        current = (current++) % soundResources.length;
-        playSong(soundResources[current]);
-    }
-
-    private void playSong(int res) {
-        if (player != null) {
-            player.stop();
-            player = null;
-        }
-
-        player = MediaPlayer.create(App.getContext(), R.raw.music01);
-        player.setOnCompletionListener(this);
-        player.setLooping(false);
-        player.setVolume(1.0f, 1.0f);
-        player.start();
+        current = (current + 1) % mediaPlayers.length;
+        Play();
     }
 }

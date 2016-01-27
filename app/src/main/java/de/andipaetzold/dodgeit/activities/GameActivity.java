@@ -25,6 +25,7 @@ import de.andipaetzold.dodgeit.objects.character.CharacterFactory;
 import de.andipaetzold.dodgeit.objects.obstacles.Obstacle;
 import de.andipaetzold.dodgeit.objects.obstacles.ObstacleFactory;
 import de.andipaetzold.dodgeit.util.BackgroundMusic;
+import de.andipaetzold.dodgeit.util.SoundEffects;
 
 public class GameActivity extends Activity implements OnClickListener {
     private enum GameStatus {
@@ -151,6 +152,8 @@ public class GameActivity extends Activity implements OnClickListener {
     }
 
     private void collision() {
+        SoundEffects.getInstance().Play(R.raw.crash);
+
         status = GameStatus.GAMEOVER;
 
         Fragment frag = getFragmentManager().findFragmentByTag("dialog_score");
