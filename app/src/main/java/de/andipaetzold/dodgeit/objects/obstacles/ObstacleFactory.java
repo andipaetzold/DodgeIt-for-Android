@@ -41,10 +41,10 @@ public class ObstacleFactory {
         }
 
         // spawn
-        timeUntilSpawn -= delta;
+        timeUntilSpawn -= delta * scrollSpeed;
         if (timeUntilSpawn < 0) {
             obstacles.add(createObstacle());
-            timeUntilSpawn = 2000;
+            timeUntilSpawn = RandomExtension.nextInt(500, 1000);
         }
     }
 

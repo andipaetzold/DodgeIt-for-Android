@@ -39,8 +39,6 @@ public class GameActivity extends Activity implements OnClickListener {
     private ObstacleFactory obstacleFactory = new ObstacleFactory(this);
     private CharacterFactory characterFactory = new CharacterFactory();
 
-    private float scrollSpeed = 0.3f;
-
     private GameStatus status = GameStatus.RUNNING;
 
     private float score = 0;
@@ -119,8 +117,8 @@ public class GameActivity extends Activity implements OnClickListener {
 
         if (status == GameStatus.RUNNING) {
             // calc position
-            backgroundFactory.calcBackgrounds(delta, scrollSpeed);
-            obstacleFactory.calcObstacles(delta, scrollSpeed);
+            backgroundFactory.calcBackgrounds(delta, getScrollSpeed());
+            obstacleFactory.calcObstacles(delta, getScrollSpeed());
             calcCharacter(delta);
 
             // add time
@@ -191,7 +189,7 @@ public class GameActivity extends Activity implements OnClickListener {
     }
 
     public void addPoints(float points) {
-        score += points * scrollSpeed;
+        score += points * getScrollSpeed();
     }
 
     private void calcCharacter(long delta) {
@@ -230,5 +228,9 @@ public class GameActivity extends Activity implements OnClickListener {
         String timeText = decimalFormat.format(time);
         textPaint.getTextBounds(timeText, 0, timeText.length(), textBounds);
         c.drawText(timeText, Display.getWidth() - textBounds.width() - 5, textBounds.height() + 5, textPaint);
+    }
+
+    public float getScrollSpeed() {
+        return (float) (0.3f * Math.pow(1.15, Math.floor(time / 5)));
     }
 }
