@@ -35,7 +35,7 @@ public class LeaderboardActivity extends Activity {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
-            ((TextView)findViewById(R.id.leaderboard_textview_status)).setText(R.string.leaderboard_textview_offline);
+            ((TextView) findViewById(R.id.leaderboard_textview_status)).setText(R.string.leaderboard_textview_offline);
         }
 
         // update list
